@@ -20,3 +20,13 @@ export const loginValidationRules = () => {
         body('password').notEmpty().withMessage('Password is required'),
     ];
 };
+
+
+export const createTaskValidationRules = () => {
+    return [
+        body('title').notEmpty().withMessage('Title is required'),
+        body('description').notEmpty().withMessage('Description is required'),
+        body('priority').isIn(['High', 'Medium', 'Low']).withMessage('Priority must be one of High, Medium, Low'),
+        body('deadline').isISO8601().withMessage('Deadline must be a valid date in ISO 8601 format'),
+    ];
+};

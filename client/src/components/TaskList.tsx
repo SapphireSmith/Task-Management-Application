@@ -1,13 +1,13 @@
 // src/components/TaskList.tsx
 
 import React, { useState } from 'react';
-import { List, ListItem, ListItemText, IconButton, ListItemSecondaryAction } from '@mui/material';
+import { List, ListItem, ListItemText, IconButton, ListItemSecondaryAction, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmationModal from './ConfirmationModal';
 
 interface Task {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   priority: 'High' | 'Medium' | 'Low';
@@ -45,16 +45,28 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onEdit, onDelete }) => {
     <>
       <List>
         {tasks.map((task) => (
-          <ListItem key={task.id} divider>
+          <ListItem key={task._id} divider>
             <ListItemText
               primary={task.title}
-              secondary={`${task.description} - Priority: ${task.priority} - Deadline: ${task.deadline}`}
+              secondary={
+                <>
+                  <Typography variant="body2" color="textSecondary">
+                    {task.description}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Priority: {task.priority}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Deadline: {task.deadline}
+                  </Typography>
+                </>
+              }
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="edit" onClick={() => onEdit(task)}>
                 <EditIcon />
               </IconButton>
-              <IconButton edge="end" aria-label="delete" onClick={() => openConfirmationModal(task.id)}>
+              <IconButton edge="end" aria-label="delete" onClick={() => openConfirmationModal(task._id)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
