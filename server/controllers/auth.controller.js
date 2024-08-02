@@ -6,12 +6,10 @@ export const register = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body;
 
     try {
-        if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Password didn't match" })
-        }
+
         let user = await User.findOne({ email });
         if (user) {
-            return res.status(409).json({ message: 'User with this email already exists.' });
+            return res.status(409).json({ msg: 'User with this email already exists.' });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -51,12 +49,12 @@ export const login = async (req, res) => {
     try {
         let user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: 'Email Not Registered' });
+            return res.status(404).json({ msg: 'Email Not Registered' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid Password' });
+            return res.status(400).json({ msg: 'Invalid Password' });
         }
 
         const payload = {

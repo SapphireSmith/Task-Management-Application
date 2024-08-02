@@ -17,7 +17,7 @@ const LoginPage = () => {
             window.location.href = '/dashboard';
         } catch (error: any) {
             console.log(error);
-            toast.error(`${error.response?.data.message || 'login failed.'}`);
+            toast.error(`${error.response?.data.msg || 'login failed.'}`);
         }
     };
 
